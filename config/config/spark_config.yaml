@@ -1,0 +1,153 @@
+# ============================================================
+# Spark Configuration File
+# Big Data ML Project – Bag of Words (KOS / NIPS)
+# ============================================================
+
+project:
+  name: "BagOfWords_BigData_ML"
+  environment: "local"   # options: local | standalone | yarn | kubernetes
+  seed: 42
+
+# ------------------------------------------------------------
+# Spark Core Configuration
+# ------------------------------------------------------------
+spark:
+
+  app:
+    name: "BagOfWords_Pipeline"
+
+  master:
+    local: "local[*]"            # Use all available cores
+    standalone: "spark://localhost:7077"
+    yarn: "yarn"
+    kubernetes: "k8s://https://<cluster-url>"
+
+  resources:
+    driver_memory: "6g"
+    executor_memory: "6g"
+    executor_cores: 4
+    num_executors: 2
+
+  serialization:
+    serializer: "org.apache.spark.serializer.KryoSerializer"
+    kryo_buffer_max: "512m"
+
+  sql:
+    shuffle_partitions: 200
+    adaptive_enabled: true
+    auto_broadcast_join_threshold: "50MB"
+
+  storage:
+    checkpoint_dir: "./checkpoints"
+    warehouse_dir: "./spark-warehouse"
+    parquet_compression: "snappy"
+
+  performance:
+    dynamic_allocation: false
+    speculative_execution: false
+    broadcast_timeout: 600
+    network_timeout: "800s"
+
+# ------------------------------------------------------------
+# ML Configuration
+# ------------------------------------------------------------
+ml:
+
+  features:
+    tfidf:
+      min_df: 2
+      min_tf: 1
+      vocab_size: 7000
+      normalization: "l2"
+
+    pca:
+      k: 50
+      explained_variance_target: 0.90
+
+    lexical_features:
+      enabled: true
+
+  clustering:
+
+    kmeans:
+      k_values: [5, 10, 15, 20, 25]
+      max_iter: 50
+      tolerance: 0.0001
+      init_mode: "k-means||"
+
+    bisecting_kmeans:
+      k_values: [10, 15, 20]
+      max_iter: 50
+
+    lda:
+      topic_values: [10, 15, 20, 30]
+      max_iter: 50
+      optimizer: "online"
+      learning_decay: 0.51
+      learning_offset: 1024.0
+      subsampling_rate: 0.05
+
+    gmm:
+      components: [10, 15, 20]
+      covariance_type: "diag"
+      max_iter: 200
+
+# ------------------------------------------------------------
+# Data Splitting Strategy
+# ------------------------------------------------------------
+data:
+
+  split:
+    train_ratio: 0.70
+    validation_ratio: 0.15
+    test_ratio: 0.15
+    random_seed: 42
+
+  scaling:
+
+    strong_scaling:
+      partitions: [2, 4, 6, 8]
+
+    weak_scaling:
+      dataset_fractions: [0.25, 0.50, 0.75, 1.0]
+
+# ------------------------------------------------------------
+# Evaluation Configuration
+# ------------------------------------------------------------
+evaluation:
+
+  clustering_metrics:
+    - silhouette
+    - davies_bouldin
+    - calinski_harabasz
+
+  bootstrap:
+    enabled: false
+    n_iterations: 1000
+
+  visualization:
+    tsne_sample_size: 500
+    silhouette_sample_size: 300
+
+# ------------------------------------------------------------
+# Logging & Monitoring
+# ------------------------------------------------------------
+logging:
+
+  level: "WARN"
+  log_dir: "./logs"
+  save_metrics_json: true
+  save_scaling_csv: true
+
+# ------------------------------------------------------------
+# Cost-Performance Analysis (for reporting)
+# ------------------------------------------------------------
+cost_analysis:
+
+  estimated_cost_per_executor_hour: 0.25   # adjust for cloud
+  include_cpu_utilization: true
+  include_memory_utilization: true
+
+# ============================================================
+# End of Configuration
+# ============================================================

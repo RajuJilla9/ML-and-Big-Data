@@ -1,0 +1,151 @@
+{
+  "project": {
+    "title": "Big Data & Machine Learning -- Clustering Analysis",
+    "description": "Interactive Tableau dashboards for clustering experiments conducted using PySpark MLlib and scikit-learn on the Bag-of-Words (KOS) dataset.",
+    "dataset_source": "Exported from Spark processing pipelines"
+  },
+
+  "dashboards": [
+
+    {
+      "name": "Data Quality & EDA",
+      "dataset": "doc_lengths.csv",
+      "purpose": "Analyze document structure, distribution characteristics, and lexical complexity before model training.",
+      "visualizations": [
+        {
+          "type": "Histogram",
+          "title": "Unique Terms Distribution"
+        },
+        {
+          "type": "Histogram",
+          "title": "Document Length Distribution"
+        },
+        {
+          "type": "Scatter Plot",
+          "title": "Complexity Relationship",
+          "features": ["Trend Line"]
+        },
+        {
+          "type": "Histogram",
+          "title": "Document Complexity Ratio"
+        }
+      ],
+      "key_insight": "Long-tail distributions and strong correlation between document length and vocabulary growth."
+    },
+
+    {
+      "name": "Model Performance Comparison",
+      "dataset": "evaluation_metrics.csv",
+      "algorithms_compared": [
+        "KMeans",
+        "BisectingKMeans",
+        "GMM"
+      ],
+      "visualizations": [
+        {
+          "type": "Bar Chart",
+          "title": "Silhouette Score Comparison"
+        },
+        {
+          "type": "Bar Chart",
+          "title": "Davies-Bouldin Index Comparison"
+        },
+        {
+          "type": "Bar Chart",
+          "title": "Calinski-Harabasz Score Comparison"
+        },
+        {
+          "type": "Scatter Plot",
+          "title": "Separation vs Compactness"
+        }
+      ],
+      "key_insight": "Models with high silhouette and low Davies-Bouldin index demonstrate superior clustering quality."
+    },
+
+    {
+      "name": "Clustering Structure",
+      "dataset": "tsne_clusters.csv",
+      "parameter": {
+        "name": "Select Algorithm",
+        "options": [
+          "KMeans",
+          "BisectingKMeans",
+          "GMM"
+        ]
+      },
+      "calculated_field": {
+        "name": "Selected Cluster",
+        "logic": "CASE [Select Algorithm] WHEN 'KMeans' THEN [km_cluster] WHEN 'BisectingKMeans' THEN [bkm_cluster] WHEN 'GMM' THEN [gmm_cluster] END"
+      },
+      "visualizations": [
+        {
+          "type": "Scatter Plot",
+          "title": "t-SNE Cluster Visualization"
+        },
+        {
+          "type": "Bar Chart",
+          "title": "Cluster Count Distribution"
+        },
+        {
+          "type": "Measure Comparison",
+          "title": "Measure Values vs Selected Cluster"
+        }
+      ],
+      "key_insight": "Cluster separation and distribution vary across algorithms, highlighting modeling differences."
+    },
+
+    {
+      "name": "Scalability & Performance",
+      "dataset": "scalability_results.csv",
+      "visualizations": [
+        {
+          "type": "Line Chart",
+          "title": "Training Time vs Dataset Size",
+          "scaling_type": "Weak Scaling"
+        },
+        {
+          "type": "Line Chart",
+          "title": "Training Time vs Cores",
+          "scaling_type": "Strong Scaling"
+        },
+        {
+          "type": "Scatter Plot",
+          "title": "Algorithm Cores vs Training Time"
+        }
+      ],
+      "key_insight": "Training time trends demonstrate distributed scalability and cost-performance trade-offs."
+    }
+  ],
+
+  "tableau_features_used": [
+    "Parameter Controls",
+    "Calculated Fields",
+    "Trend Lines",
+    "Histogram Binning",
+    "Scatter Plots",
+    "Hyper Extract Optimization"
+  ],
+
+  "data_processing_workflow": [
+    "Data ingestion via Spark from Bag-of-Words dataset",
+    "Feature engineering using TF-IDF and PCA",
+    "Model training (KMeans, BisectingKMeans, GMM)",
+    "Evaluation metric computation",
+    "t-SNE dimensionality reduction",
+    "Export to CSV",
+    "Visualization in Tableau"
+  ],
+
+  "reproducibility": {
+    "steps": [
+      "Run notebooks: Data Ingestion",
+      "Run notebooks: Feature Engineering",
+      "Run notebooks: Model Training",
+      "Run notebooks: Evaluation",
+      "Export CSV files from /outputs",
+      "Open Tableau workbook and refresh data sources"
+    ]
+  },
+
+  "conclusion": "Complete analytical visualization layer for distributed clustering experiments supporting interpretability, performance comparison, structural validation, and scalability evaluation."
+}

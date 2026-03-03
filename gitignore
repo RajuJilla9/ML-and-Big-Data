@@ -1,0 +1,104 @@
+===============================
+
+Python
+
+===============================
+
+pycache/ .py[cod] .pyo .pyd .so .egg .egg-info/ dist/ build/ .eggs/
+*.log
+
+Virtual environments
+
+venv/ env/ ENV/ .venv/ .python-version
+
+===============================
+
+Jupyter Notebooks
+
+===============================
+
+.ipynb_checkpoints/
+
+===============================
+
+PySpark / Hadoop
+
+===============================
+
+metastore_db/ spark-warehouse/ .crc .lck
+
+===============================
+
+Data Files (Large / Generated)
+
+===============================
+
+data/raw/ data/processed/ data/parquet/ outputs/ models/ checkpoints/
+
+Allow sample datasets
+
+!data/schemas/ !data/samples/
+
+===============================
+
+Tableau
+
+===============================
+
+.hyper .tde .twbr .twbx~ tableau/*.hyper
+
+===============================
+
+Docker
+
+===============================
+
+*.tar docker-compose.override.yml
+
+===============================
+
+Environment / Config Secrets
+
+===============================
+
+.env .key .pem .crt secrets/ config/local_.yaml config/local_*.json
+
+===============================
+
+OS Files
+
+===============================
+
+.DS_Store Thumbs.db desktop.ini
+
+===============================
+
+Testing / Coverage
+
+===============================
+
+.coverage htmlcov/ .pytest_cache/
+
+===============================
+
+IDE / Editor
+
+===============================
+
+.vscode/ .idea/ .swp .swo
+
+===============================
+
+Logs
+
+===============================
+
+logs/ .out .err
+
+===============================
+
+Temporary Files
+
+===============================
+
+tmp/ temp/ *.tmp

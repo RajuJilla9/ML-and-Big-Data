@@ -1,0 +1,21 @@
+name: spark-ml-environment
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.10
+  - pip
+  - pyspark
+  - scikit-learn
+  - pandas
+  - numpy
+  - matplotlib
+  - seaborn
+  - pyarrow
+  - wordcloud
+  - findspark
+  - jupyterlab
+  - notebook
+  - pip:
+      - gzip-stream

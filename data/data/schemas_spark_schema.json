@@ -1,0 +1,24 @@
+{
+    "dataset": "Bag_of_Words_KOS",
+    "description": "Schema definition for Bag-of-Words document-word representation",
+    "fields": [
+        {
+            "name": "docID",
+            "type": "integer",
+            "nullable": false,
+            "description": "Unique document identifier"
+        },
+        {
+            "name": "wordID",
+            "type": "integer",
+            "nullable": false,
+            "description": "Unique word identifier from vocabulary"
+        },
+        {
+            "name": "count",
+            "type": "integer",
+            "nullable": false,
+            "description": "Frequency of word in document"
+        }
+    ]
+}
